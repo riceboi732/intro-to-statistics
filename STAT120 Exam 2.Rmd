@@ -1,0 +1,85 @@
+---
+title: "STAT120 Exam 2"
+author: "Victor Huang"
+date: "5/12/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.a	i) The true population parameter
+
+1.b	ii) The null parameter
+
+1.c	ii) If $H_{0}$ is true, there is a 2% chance that a random sample of size 50 would have a mean which is less than or equal to 78.
+
+1.d	Histogram ii
+
+1.e	Histogram i
+
+1.f	Histogram iv
+
+1.g	Histogram iii
+
+2.a	The approximate center is around 50 whereas the approximate standard error is around 4 
+
+2.b	50
+
+2.c
+
+i) p-value = 0.03
+
+ii) p-value = 0.97
+
+iii) p-value = 0.06
+
+3.a	The parameter of interest is the proportion of all young US adults (ages 18-29) that vote; $p$ 
+
+3.b	Since the parameter of interest is the proportion, the corresponding sample statistic would be $\hat{p} = \frac{270}{500} = 0.54$
+
+3.c	It is appropriate to use a normal distribution since both np and n(1-p) are larger or equal 
+to 10 (np = 270, n(1-p) = 230).
+
+3.d	$SE = \sqrt{\frac{p(1-p)}{n}} = 0.0223$
+
+3.e	Confidence Interval = Sample Statistic $\pm z^*(SE) = 0.54 \pm 2.33(0.0223) = 0.54 \pm 0.052$ -> 0.4880 to 0.5920
+
+3.f	There is a 98% chance that the proportion of young US adults (ages 18-29) that vote is between the values of 0.4880 and 0.5920
+
+4.a	$H_{0}: \mu_{c} = \mu_{r}; H_{a}: \mu_{c} \not = \mu_{r}$ ($\mu_{c}$ = the average happiness of cyclists, $\mu_{r}$ = the average happiness of runners)
+
+4.b	Since we are dealing with means here, we should use t-statistic
+
+4.c	$\overline{x}_{c} = 89$; $\overline{x}_{c} = 85$; t-statistic = 1.8856
+
+4.d	p-value = (1-pt(1.8856, 49))*2 = 0.0653
+
+4.e	Since our p-value is greater than $\alpha = 0.05$, we fail to reject the null hypothesis; Since our p-value is less than $\alpha = 0.1$, we can reject null hypothesis
+
+4.f	At significance level of 0.05,since we have a p-value greater than the significance level (0.05), we can conclude that there is indeed no difference of average happiness levels for those who ride bikes and those who run. At significance level of 0.10, however, we have increased our significance level (think of it as making our signiance level reflect  higher percentage/greater magnitude). This way, as long as our p-value is less than the significance level, we can reject the null hypothesis. Since we have a p-value that is smaller than the significance level (0.10), we reject the null hypothesis
+
+5.a	$4.3 \pm z(\frac{s}{\sqrt{n}}) = 4.3 \pm 0.36 = 3.94, 4.66$
+
+5.b	Margin of error = $t^*(\frac{s}{\sqrt{n}}) = 3.11(\frac{0.4}{\sqrt{12}}) = 0.36$ (based on a 99% confidence interval)
+
+5.c	$n = (\frac{z^* \cdot s}{ME})^2 = (\frac{2.56 \cdot 0.4}{0.01})^2 = 10485.76 \approx 10486$
+
+5.d	Not correct; We found a 99% confidence interval of (4.29, 4.31). Thus, we are 99% confident 
+that the average of all tanks breaking point will fall between 4.29 barrs and 4.31 barrs. 
+
+6.a	Yes; $n_{a}p_{a} = 27$,  $n_{a}(1-p_{a}) = 23$,  $n_{b}p_{b} = 24$,  $n_{b}(1-p_{b}) = 26$. Since all values are greater than 10, we can use normal distribution
+
+6.b	$H_{0}: p_{a} = p_{b}; H_{a}: p_{a} \not = p_{b}$ ($p_{a}$ is the proportion of athletes who had improved time consuming drink A, $p_{b}$ is the proportion of athletes who had improved time consuming drink B).
+
+6.c	$\hat{p}_{a} = \frac{27}{50} = 0.54; \hat{p}_{b} = \frac{24}{50} = 0.48$ 
+$SE = \sqrt{\frac{(p_{a}(1-p_{a})}{n_{a}} + \frac{p_{b}(1-p_{b})}{n_{b}})} = \sqrt{\frac{(0.54(1-0.54)}{50} + \frac{0.48(1-0.48)}{50})}$; $z = \frac{statistic - null}{SE} = \frac{0.06}{0.0998} = 0.60$
+
+6.d	p-value = 0.5485
+
+6.e	Since p-value is so large, we fail to reject the null hypothesis
+
+6.f	Not Correct; While the proportions for those who drank Drink A and Drink B in our sample is different ($\frac{27}{50}$ for Drink A and $\frac{24}{50}$ for Drink B). Our large p-value from part e. indicates that there is no significant evidence to reject the null hypothesis. That is, there is no difference in performance for athletes who drink Drink A and those who drink Drink B. As such, it would be pretty rare to see sample results as extreme as the one we saw on account for the high p-value Thus, while we can sometimes find sample statistics that are counter-intuitive to our conclusion, we still do not have statistically significant evidence that there is a difference in the proportion for all athletes.

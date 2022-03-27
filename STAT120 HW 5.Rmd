@@ -1,0 +1,201 @@
+---
+title: "STAT120 HW 5"
+author: "Victor Huang"
+date: "5/4/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+library(Lock5Data)
+library(CarletonStats)
+opts_chunk$set(echo = FALSE,out.width="50%",fig.align="center",message=FALSE)
+```
+
+Section 4.5
+
+4.161
+
+a. Do not reject $H_{0}$, $\alpha = 0.05$
+b. Reject $H_{0}$, $\alpha = 0.05$
+c. Reject $H_{0}$, $\alpha = 0.05$
+
+4.162
+
+a. Reject $H_{0}$, $\alpha = 0.01$
+b. Do not reject $H_{0}$, $\alpha = 0.01$
+c. Reject $H_{0}$, $\alpha = 0.01$
+
+Unit B Essential Synthesis Questions
+
+B.1
+
+a. Reject the null hypothesis
+
+b. One inappropriate way of collecting the data would be to purposefully select students who recover slowly and students who recover quickly and give the vitamin C to those who recover quickly
+
+c. By randomly selecting students around campus without bias and splitting them randomly into two groups, one given vitamin C one not given.
+
+d. If our p-value comes form part (c), we can say that there is a strong correlation between recovering quicker and vitamin C intake.
+
+B.4,
+
+a. Yes it does
+
+```{r, echo=FALSE}
+NFL<-data.frame(
+Winner=c(rep(1,94),rep(0,94),rep(1,146),rep(0,94)),
+Year=c(rep("1974_1993",188),rep("1994_2009",240))
+)
+permTest(Winner ~ Year, data = NFL)
+```
+Since we have a high p-value, we can accept the $H_{0}$. Thus, we can see that the new rule implementation did indeed have an effect on the winning chances of team who gets the ball first by coin flip.
+
+B.5
+
+a. Roommates are assigned at random
+
+b. $H_{0}: \mu_{v} = \mu_{n}; H_{a}: \mu_{v} < \mu_{n}$
+
+c. Reject $H_{0}$
+
+d. Negative differences indicate $\mu_{v} < \mu_{n}$
+
+e. Do not reject $H_{0}$
+
+B.15
+
+a. 0.05
+
+b. About 0 to 0.12; About 0.25 to 0.7
+
+c. SE = 0.02; SE = 0.005
+
+d. Yes; No
+
+B.50
+
+a. Relevant parameters: The proportion of babies born without infection with mothers who were wiped and those who weren't wiped
+
+$H_{0}: \hat{p}_{w} = \hat{p}_{n}; H_{a}: \hat{p}_{w} > \hat{p}_{n}$ The null hypothesis states that the proportion of mothers wiped and not wiped have the same proportion (w = wiped, n = not wiped). The alternative hypothesis states that those who were wiped have a lower chance of infection compared to those who were not wiped.
+
+b. The sample statistic would be the proportion of babies without infection$(\hat{p})$
+
+c. If the results are significant, it means that we can accept the alternative hypothesis and claim that the wipes treated with chlorohexidine does indeed lower the chances of a newborn contracting and infection. 
+
+d. If the results are insignificant, it mean we can accept the null hypothesis and conclude that the wipses treated with chlorohexidine and not treated have no effect on newborns born with or without an infection. 
+
+Section 5.1
+
+5.1
+
+0.014
+
+5.2
+
+0.212
+
+5.7
+
+$z = 3.0$
+
+5.8
+
+$z = -1.3$
+
+5.14
+
+a. 0.14
+
+b. 0.00002
+
+c. 0.1141
+
+5.24
+
+$H_{0}: p_{g} = 0.5; H_{a}: p_{g} < 0.5$; z = -2.093; p-value = 0.018 ($\alpha = 0.05$); Reject $H_{0}$
+
+5.28
+
+$H_{0}: p_{c} = 0.4; H_{a}: p_{g} > 0.4$; z = 1.875; p-value = 0.0304 ($\alpha = 0.05$); Reject $H_{0}$
+
+Section 5.2
+
+5.36
+
+21.332 to 24.868
+
+5.40
+
+0.1736 to -0.1596
+
+5.45
+
+54.8 to 60.3
+
+5.53 (use boot from CarletonStats for the bootstrap)
+
+a. Approximately from 11.9 to 20.4
+
+b. Approximately from 11.7 to 20.3
+
+Section 6.1-D
+
+6.4
+
+0.0811
+
+6.10
+
+a. No
+
+b. No
+
+c. Yes
+
+d. Yes
+
+Section 6.1-CI
+
+6.19
+
+a. 0.271 to 0.429
+
+b. No; Yes
+
+6.24
+
+a. 0.775 to 0.809
+
+b. 0.566 to 0.614
+
+c. 0.590; plausible
+
+6.39
+
+$n \geq 846$
+
+Section 6.1-HT (Note: For the parts that say “Show all details of the test,” use the 5 steps (see page 293)
+
+6.52
+
+x = 438, n = 616; $H_{0}: p = 0.7; H_{a}: p > 0.7$; $\hat{p} = 0.711$; $z = 0.6$; p-value = 0.274; Since we have a p-value greater than the designated significance value, we fail to reject the null hypothesis. Hence, we can not conclude that more than 70% of Canadian infants receive antibiotics. 
+
+6.53
+
+a. $H_{0}: p_{1} = 0.10; H_{a}: p_{1} \not= 0.10$
+
+b. z = 1.79; p = 0.074
+
+c. Reject $H_{0}$ at 10%; Fail to reject $H_{0}$ at 5%
+
+6.56
+
+x = 1288, n = 2428; $H_{0}: p = 0.5; H_{a}: p > 0.5$; $\hat{p} = 0.5305$; $z = 3.01$; p-value = 0.0013; Since we have a p-value less than the designated significance value, we reject the null hypothesis. Hence, we conclude that the home team wins more than half the games
+
+6.58
+
+x = 90, n = 400; $H_{0}: p = 0.2; H_{a}: p > 0.2$; $\hat{p} = 0.225$; $z = 1.25$; p-value = 0.1056; Since we have a p-value greater than the designated significance value, we fail to reject the null hypothesis. Hence, we conclude that there is no evidence that B is more likely than 20% to the correct answer.

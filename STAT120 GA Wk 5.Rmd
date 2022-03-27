@@ -1,0 +1,40 @@
+---
+title: "STAT 120 Group Activity"
+author: "Victor Huang Andrew Weller, Mason Priest, Nora Caballero"
+date: "4/28/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+1.a The parameter of interest would be the proportions of car that are ineffective.
+
+$H_{0}: p_{mf} = 0.1$ verses $H_{a}: p_{mf} > 0.1$
+
+1.b $\hat{p} = 0.125$
+
+1.c 
+pnorm
+Type I: They recall all cars even though there is less or equal to ten percent of cars experiencing malfunctions
+
+Type II: They do not recall the cars even though there is more than ten percent of cars experienncing malfunctions
+
+1.d Yes; do not have enough information to draw a conclusion
+
+2.a No; $H_{0}: \mu = 10$ verses $H_{a}: \mu < 10$;$z = -1.43$; $p = 0.076$; we can not be 95% confident in that the average honey production is less than 10 lbs.
+
+2.b 8 plus or minus 6.6402
+
+3.a
+```{r, echo=FALSE}
+library(CarletonStats)
+SleepCaffeine<-read.csv("https://www.lock5stat.com/datasets2e/SleepCaffeine.csv")
+boot(Words ~ Group, data = SleepCaffeine, conf.level=0.9)
+```
+We can be 90% sure that the mean diffence between the caffiene and sleeping groups is between -5.25 and -0.833.
+
+3.b -3 plus minus 7.055632
+
+```{r,echo=FALSE}
+qnorm(0.05, -3, 1.362) * 1.34642
+```

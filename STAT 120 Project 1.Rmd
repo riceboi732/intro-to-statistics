@@ -1,0 +1,109 @@
+---
+title: "A Study on how Nocturnal Luminescence can Affect Physical Health"
+author: "Karen Chen, Victor Huang"
+date: "04/28/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(CarletonStats)
+library(gridExtra)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, fig.align = "center", warning = FALSE)
+```
+
+## Introduction
+
+For this project we will be investigating the physical effects night light levels can have. ^[Data taken from Lock, R. H., Frazer Lock, P., Morgan Lock, K., Lock, E. F., & Lock, D. F. (2017). *Statistics: Unlocking the power of data* (2nd ed.)] ^[All permutation tests were completed using commands from the CarletonStats R package.] More specifically, how exposure to high levels of brightness during the night time can correlate to worse physical health conditions. The data we will be using in this lab will be based off of 27 mice who were randomly selected and split into three groups of 8, 9, and 10. The group of 8 mice were subjected to no light, the group of 9 mice were subjected to bright light, and the remaining group of 10 mice were subjected to dim light. After the course of 4 weeks, all 27 mice were measured once again, their starting and ending measurements recorded and organized. From the data, we hypothesize that the mice who were subjected to varying degrees of brightness during no-light hours would be in worse physical condition 4 weeks later compared to their no-lights-after-dark mindset counterparts, we seek to legitimize this hypothesis by using health indicators such as Activity, BMGain, Corticosterone, and GlucoseInt to check if their physical conditions are indeed better (i.e. more physically healthy).
+
+As stated above, our observation will focus on three separate physical health indicators:
+
+1. Activity: A measure of physical activity
+
+2. BMGain:  Body mass gain (in grams over a four week period)
+
+3. Corticosterone:  Blood corticosterone level (a measure of stress)
+
+4. GlucoseInt: Glucose intolerance (an indicator for diabetes)
+
+For each health indicator, we will compare the results for all three groups side-by-side to see the effects different lighting conditions have. We conclude three pairs of null and alternative hypothesis as stated below
+
+$H_{0}: \mu_{aD} = \mu_{aM} = \mu_{aL}$ verses $H_{a}: \mu_{aD} > \mu_{aM} > \mu_{aL}$
+
+The null hypothesis states that activity level will not be affected by nightlight while the alternative states that they will, with exposure to brighter lights correlating to lesser activity.
+
+$H_{0}: \mu_{bD} = \mu_{bM} = \mu_{bL}$ verses $H_{a}: \mu_{bD} < \mu_{bM} < \mu_{bL}$
+
+The null hypothesis states that body mass gained will not be affected by nightlight while the alternative states that mice exposed to lights will gain more weight depending on the brightness of light they were exposed to.
+
+$H_{0}: \mu_{cD} = \mu_{cM} = \mu_{cL}$ verses $H_{a}: \mu_{cD} < \mu_{cM} < \mu_{cL}$
+
+The null hypothesis states that corticosterone levels  will not be affected by nightlight while the alternative states that mice exposed to lights will have higher corticosterone levels (stress levels) depending on the brightness of light they were exposed to.
+
+## Results
+
+```{r,fig.width=8,fig.height = 4,out.width="80%", fig.cap = "Lightings Effects On Body Mass Gain, Lightings Effects on Costicosterone, Lightings Effects on Activity", echo=FALSE}
+library(ggplot2)
+LightatNight4Weeks<-read.csv("https://www.lock5stat.com/datasets2e/LightatNight4Weeks.csv")
+p1 <- ggplot(LightatNight4Weeks, aes(x = Light, y = BMGain)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y=" Body Mass Gain",title="Light/Body Mass Gain") + geom_point()
+p2 <- ggplot(LightatNight4Weeks, aes(x = Light, y = Corticosterone)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y="Corticosterone",title="Light/Costicosterone") + geom_point()
+p3 <- ggplot(LightatNight4Weeks, aes(x = Light, y = Activity)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y="Activity",title="Lighting/Activity") + geom_point()
+grid.arrange(p1,p2,p3,nrow = 1)
+```
+```{r,fig.width=8,fig.height = 4,out.width="80%", fig.cap = "Lightings effect on Glucose Intolerance",echo=FALSE}
+library(ggplot2)
+ggplot(LightatNight4Weeks, aes(x = Light, fill = GlucoseInt)) + geom_bar(position = "fill") + labs(x="Light Levels",y="",title="Light/Glucose Intolerance") 
+```
+Since we have 3 different levels for the x axis (Dim light, Bright Light, No Light), we weren't able to conduct any permutation tests as they were designed for 2 levels. However, we were able to split the data into pairs of two, separately comparing two light levels at the same time (bright and no light, bright and dim light, dim and no light). With this done, we were able to conduct permutation tests to prove our hypothesize. Setting the significance level to be $\alpha = 0.05$, we found that the sample statistic is -5.08375 and the p-values for the comparisons regarding body mass gains to respectively be 4e-04, 2e-04, and 2e-04 for bright/no, bright/dim, and dim/no to be significantly lower than the significance level. We found that the p-values were significantly higher than the significance level for corticosterone (sample statistic: 19.18887, p-values: 0.4346, 0.4402, 0.4404) and activity ( sample statistics: -429.2361, p-values: 0.7058, 0.6968, 0.71). As such, we accepted the null hypothesis for our second and third hypothesis and rejected our first null hypothesis. Thus, we have significance evidence that light levels at night significantly affect mice body mass gain while not having any evidence that light level has any effect on corticosterone and activity levels.
+
+Out of curiosity, we decided to dig a little deeper into the body mass gain. With this observation we decided to look at another indicator (GlucoseInt) to further support this hypothesis as glucose intolerance is often associated to diabetes as well as weight gain.
+
+From this, we see that the group of mice not subjected to light had no glucose intolerance while the groups of dimly lit and brightly lit mouse had some proportion of of mice with glucose intolerance. This supports our previous hypothesis that lighting does indeed cause body mass gain for mice.
+
+## Discussion
+
+To conclude everything above, using a significance level of $\alpha = 0.05$ we were able to reject our first null hypothesis and accept out second and third hypothesis. We came to the conclusion that while nightlight levels do no impact corticosterone and activity levels, they have a significant impact on body mass gain. 
+
+A problem our group wants to point out is that the dataset we are working with was very small and only consists of 27 subjects. Perhaps with a larger sample size we would have been able to get more accurate results. We also would like to point out that even though these mice were randomly picked, we are not sure they serve as an accurate representation of the population as a whole. Another issue could exists in the fact that each group did not have the same number of mice as the group of 27 mice were split into 8, 9, and 10 mice groups. If we were able to do this study again, we would prefer to have a larger sample size that represents the population at large. 
+
+
+## R Markdown Code:
+
+## Code for Creating Graphs on Activity, Body Mass Gain, and Costicosterone Levels:
+
+{r,fig.width=8,fig.height = 4,out.width="80%", fig.cap = "Lightings Effects On Body Mass Gain, Lightings Effects on Costicosterone, Lightings Effects on Activity", echo=FALSE}
+library(ggplot2)
+LightatNight4Weeks<-read.csv("https://www.lock5stat.com/datasets2e/LightatNight4Weeks.csv")
+p1 <- ggplot(LightatNight4Weeks, aes(x = Light, y = BMGain)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y=" Body Mass Gain",title="Light/Body Mass Gain") + geom_point()
+p2 <- ggplot(LightatNight4Weeks, aes(x = Light, y = Corticosterone)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y="Corticosterone",title="Light/Costicosterone") + geom_point()
+p3 <- ggplot(LightatNight4Weeks, aes(x = Light, y = Activity)) + stat_summary(fun = "mean", geom = "point", shape = 23, size = 3, fill = "white") + labs(x="Light Levels",y="Activity",title="Lighting/Activity") + geom_point()
+grid.arrange(p1,p2,p3,nrow = 1)
+
+## Code for Creating Permutation tests: 
+
+{r, echo=FALSE}
+BrightAndNoLightBMG<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="LD") %>% select(Light,BMGain)
+permTest(BMGain ~ Light, data = BrightAndNoLightBMG)
+BrightAndDimBMG<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="DM") %>% select(Light,BMGain)
+permTest(BMGain ~ Light, data = BrightAndNoLightBMG)
+DimAndNoLightBMG<-LightatNight4Weeks %>% filter(Light=="DM"|Light=="LD") %>% select(Light,BMGain)
+permTest(BMGain ~ Light, data = BrightAndNoLightBMG)
+
+{r, echo=FALSE}
+BrightAndNoLightCorticosterone<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="LD") %>% select(Light,Corticosterone)
+permTest(Corticosterone ~ Light, data = BrightAndNoLightCorticosterone)
+BrightAndDimCorticosterone<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="DM") %>% select(Light,Corticosterone)
+permTest(Corticosterone ~ Light, data = BrightAndNoLightCorticosterone)
+DimAndNoLightCorticosterone<-LightatNight4Weeks %>% filter(Light=="DM"|Light=="LD") %>% select(Light,Corticosterone)
+permTest(Corticosterone ~ Light, data = BrightAndNoLightCorticosterone)
+
+## Code for Creating Stacked Bar Graph for Glucose Intolerance:
+
+{r, echo=FALSE}
+BrightAndNoLightActivity<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="LD") %>% select(Light,Activity)
+permTest(Activity ~ Light, data = BrightAndNoLightActivity)
+BrightAndDimActivity<-LightatNight4Weeks %>% filter(Light=="LL"|Light=="DM") %>% select(Light,Activity)
+permTest(Activity ~ Light, data = BrightAndNoLightActivity)
+DimAndNoLightActivity<-LightatNight4Weeks %>% filter(Light=="DM"|Light=="LD") %>% select(Light,Activity)
+permTest(Activity ~ Light, data = BrightAndNoLightActivity)

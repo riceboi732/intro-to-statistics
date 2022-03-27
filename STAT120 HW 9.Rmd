@@ -1,0 +1,163 @@
+---
+title: "STAT120 HW 9"
+author: "Victor Huang"
+date: "5/30/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Section 9.1
+
+9.4
+
+$\beta_{0}$ intercept = 7.2777; $\beta_{0}$ slope = -0.3560; $y = 7.2777 - 0.3560x$
+
+9.7
+
+Sample Slope = -0.3560; $H_{0}: \beta = 0;H_{a}: \beta \not = 0$; p-value = 0.087. Since the p-value is greater than the 5% significance value, we fail to reject the null hypothesis.
+
+9.17
+
+a.The scatter plot does not reflect anything that should be of concern.
+
+b. $y = 2.03 + 0.00189(650) = 3.26$
+
+c. The slope is 0.00189, this slope reflects the increase in GPA for every SAT point.
+
+d. The test statistic if 6.99, the p-value is approximately 0. As such, we can reject the null hypothesis.
+
+e. The r-squared value is 0.125. This means that 12.5% of the values of students GPAs in this sample is explained by their corresponding verbal SAT score.
+
+9.26
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(dplyr)
+HomesForSaleCA <- read.csv("https://www.lock5stat.com/datasets2e/HomesForSaleCA.csv")
+homes.aov <- aov(Baths ~ Beds, data = HomesForSaleCA)
+summary(homes.aov)
+r <- cor(HomesForSaleCA$Baths,HomesForSaleCA$Beds)
+```
+a. $H_{0}: \beta = 0; H_{a}: \beta \not = 0$
+
+b. Since we get a r-squared value of 0.593 (59.3%).
+
+c. We get a f statistic of 40.77, the corresponding p-value is 6.53e-07 (approximately zero)
+
+d. Since we get such a small p-value, we are able to reject the null hypothesis and find significant evidence that suggests there is correlation between the number of beds and baths in a house in CA. Given the r-squared value of 59.3%, this means that 59.3% of the number of bathrooms of houses in CA  in this sample is explained by the number of their bedrooms
+
+9.28
+
+```{r,echo=FALSE}
+library(ggplot2)
+NBAStandings2016 <- read.csv("https://www.lock5stat.com/datasets2e/NBAStandings2016.csv")
+ggplot(NBAStandings2016, aes(x = WinPct, y = PtsFor)) + geom_point() + stat_smooth(method = "lm", se = FALSE)
+ggplot(NBAStandings2016, aes(x = WinPct, y = PtsAgainst)) + geom_point() + stat_smooth(method = "lm", se = FALSE)
+summary(lm(WinPct ~ PtsFor, data = NBAStandings2016))
+summary(lm(WinPct ~ PtsAgainst, data = NBAStandings2016))
+```
+
+
+a. As one data set shows linear increase while the other shows linear decrease, both graphs seem to fit conditions for a linear model 
+
+b. Equation: $WinPct = 3.594 - 0.030PtsFor$, since the p-value (3.941e-05) is so small, we can say that PtsFor is an effective predictor
+
+c. Equation: $WinPct = -2.607 + 0.030PtsAgainst$, since the p-value ( 6.203e-05) is so small, we can say that PtsAgainst is an effective predictor
+
+d. The r-squared value for PtsFor is 0.4587 while the r-squared value for PtsAgainst is 0.4416. The r-squared value for PtsFor against is larger than that of PtsAgainst.
+
+e. PtsFor: $WinPct = 3.594 - 0.030(114.9) = 0.147$; PtsAgainst: $WinPct = -2.607 + 0.030(104.1) = 0.516$ 
+
+f. Overall, the PtsAgainst seems to be more effective at predicting win percentage. This can be seen from the above example where PtsAginst predicted a 0.516 win percentage, much closer to the actual win percentage as compared to the 0.147 predicted by PtsFor. While the r-squared value for PtsFor is a bit higher than PtsAgainst, it is only approximately 1% and can be seen as not that significant when compared to the huge prediction difference as shown in example e. 
+
+Section 9.2
+
+9.43
+
+The F-stat is 7.44, the p-value is 0.011. Given this information, we can say that the linear model is appropriate for this. Since the p-value is so small, we can reject the null hypothesis.
+
+9.46
+
+a. Correlation: -0.366, the p-value is 0.015
+
+b. The slope is -3.34, the t-value is -2.55, the p-value is 0.015
+
+c. The f-stat is 6.50, the p-value is 0.015
+
+d. They are the same
+
+e. Since our p-value of 0.015 is less than the 5% significance level, we reject the null hypothesis and conclude that there is significant correlation between football and cognition.
+
+9.54
+
+```{r,echo=FALSE}
+SampCountries <- read.csv("https://www.lock5stat.com/datasets2e/SampCountries.csv")
+summary(lm(LifeExpectancy ~ Health, data = SampCountries))
+samp.aov <- aov(LifeExpectancy ~ Health, data = SampCountries)
+summary(samp.aov)
+```
+a. We get a correlation of 0.7286, the associated p-value is 0.05083
+
+b. The t-stat is 2.003, the associated p-value is 0.05083.
+
+c. We get an f-stat of 4.013 and an associated p-value of 0.0508
+
+d. Since we have a p-value of 0.0508, it is somewhat higher than a 5% significance level. As such, we can say that this model is not that effective. 
+
+Section 9.3
+
+9.58
+
+A, B; 12
+
+9.63
+
+Confidence Interval: (-0.013, 4.783); Prediction Interval: (-2.797, 7.568)
+
+9.68
+
+```{r,echo=FALSE}
+HomesForSaleNY <- read.csv("https://www.lock5stat.com/datasets2e/HomesForSaleNY.csv")
+homes.lm <- lm(Price ~ Size, data = HomesForSaleNY)
+homes.aov <- aov(Price ~ Size, data = HomesForSaleNY)
+summary(homes.aov)
+newhome <- data.frame(Size=c(2))
+predict(homes.lm, newdata = newhome, interval = "confidence", level = 0.90)
+predict(homes.lm, newdata = newhome, interval = "predict", level = 0.90)
+```
+
+
+a. Since we have such a small p-value (3.24e-08), we can say that size (square footage) is an effective predictor.
+
+b. $Price = -369.63 + 470.77(2000) = 941170.37$
+
+c. We get a 90% confidence interval of (445.2591, 698.5614). We are 90% confident that the house prices with sq footage of 2000 sqft in NY falls between the interval of (419.40, 729.42).
+
+d. We get a 90% prediction interval of (-133.2107, 1277.031). 90% of all homes in NY with 2000 sq footage have a housing price between the interval of (-133.2107, 1277.031).
+
+9.70
+
+a. $GPA = 2.03 + 0.00189(500) = 2.975$; $GPA = 2.03 + 0.00189(700) = 3.353$ 
+
+```{r,echo=FALSE}
+StudentSurvey <- read.csv("https://www.lock5stat.com/datasets2e/StudentSurvey.csv")
+gpa.lm <- lm(GPA ~ VerbalSAT, data = StudentSurvey)
+newgpa1 <- data.frame(VerbalSAT = c(500))
+predict(gpa.lm, newdata = newgpa1, interval = "confidence")
+predict(gpa.lm, newdata = newgpa1, interval = "predict")
+newgpa2 <- data.frame(VerbalSAT = c(700))
+predict(gpa.lm, newdata = newgpa2, interval = "confidence")
+predict(gpa.lm, newdata = newgpa2, interval = "predict")
+```
+b.i.  We get a 95% confidence interval of (2.91623, 3.043814). We are 95% confident that the students GPAs with a 500 verbal SAT score to fall between the interval of (2.91623, 3.043814).
+
+b.ii. We get a 95% prediction interval of (2.24318, 3.716864). 95% of all students who have a 500 verbal SAT have a GPA between the interval of (2.24318, 3.716864).
+
+b.iii. We get a 95% confidence interval of (3.289678, 3.427542). We are 95% confident that the students GPAs with a 700 verbal SAT score to fall between the interval of (3.289678, 3.427542).
+
+b.iv. We get a 95% prediction interval of (2.621305, 4.095915). 95% of all students who have a 700 verbal SAT have a GPA between the interval of (2.621305, 4.095915).

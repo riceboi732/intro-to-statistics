@@ -1,0 +1,193 @@
+---
+title: "STAT120 HW 8"
+author: "Victor Huang"
+date: "5/24/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Section 7.2
+
+7.32
+
+Expected count: $\frac{330 \cdot 160}{600} = 88$
+
+chi-square: $\frac{(89 - 88)^2}{88} = 0.01136$
+
+7.41
+
+```{r,echo=FALSE}
+out1 <- cbind(c(10,18,28),c(40,32,72),c(50,50,100))
+out1
+chisq.test(out1)
+```
+$H_{0}:p_{m} = p_{e}; H_{a}: p_{m} \not = p_{e}$ ($p_{e}$ is the proportion of electric tagged penguins that survived, $p_{m}$ is the proportion of magnet tagged penguins that survived)
+
+```{r,echo=FALSE}
+out2 <- cbind(c(14,14),c(36,36))
+out2
+```
+
+```{r,echo=FALSE}
+out1 <- cbind(c(10,18,28),c(40,32,72),c(50,50,100))
+chisq.test(out1, correct = FALSE)
+```
+The chi-square value is: 3.1746
+
+Since our p-value is larger than the significance value of 0.05, we fail to reject the null hypothesis.
+
+7.46
+
+$H_{0}:$ The method of choosing skittles does not affect their favorability; $H_{a}$: The method of choosing skittles does affect their favorability
+
+```{r,echo=FALSE}
+out3 <- cbind(c(18,13),c(9,16),c(15,19),c(13,34),c(11,9))
+chisq.test(out3)$expected
+chisq.test(out3)
+```
+Yes, the chi-squared value is 9.0691
+
+The degrees of freedom is 1 times 4, which is 4.
+
+We get a p-value of 0.0594, which is larger than a 0.05 significance value. As such, we fail to reject the null hypothesis. As such, we find no evidence that method of choosing effects skittle favorability.
+
+Section 8.6
+
+1
+
+```{r,echo=FALSE}
+library(ggplot2)
+Students <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Students.csv")
+ggplot(Students, aes(x = Sex, fill = Seat)) + geom_bar(position = "fill")
+out <- table(Students$Sex, Students$Seat)
+chisq.test(out)
+```
+It appears the females favor sitting in the front while males favor sitting in the back.
+
+Creating a table with the Students data set and preforming a chi-squared test on it. We get a p-value of 0.02475, which is much less than a 0.05 significance level. As such, we reject the null hypothesis and conclude with their being an association of sitting in the front or back based on your gender. 
+
+4
+
+```{r,echo=FALSE}
+library(ggplot2)
+MapleLeafs <- read.csv("https://math.carleton.edu/Stat120/RLabManual/MapleLeafs.csv")
+out <- table(MapleLeafs$OUTCOME, MapleLeafs$LOCATION)
+out
+chisq.test(out)
+out1 <- cbind(c(16,23),c(15,28))
+chisq.test((out1))
+```
+With a p-value of 0.8418, we fail to reject the null hypothesis. As suchm we can not conclude that there is an association between location and outcome. As such, we can draw the conclusion that location does not affect the outcome of the game. The warning sign is due to the small count (the 4 and 3). Chi-square tests are usually preformed on 2x2 or larger matrices with each element being larger or equal to 5.
+
+With the modified table, we get a different chi-squared, df, and p value. However, our p-value still remains larger than 0.05. As such, we still draw the same conclusion that location does not affect outcome.
+
+Section 8.1
+
+8.4
+
+Dataset A, while both datasets have the same difference in means, dataset A has a higher variability within each group (i.e. a more elongated box).
+
+8.16
+
+a. Since both groups ahve a positive mean value, we can see that synchronization does indeed go up.
+
+b. Since the group with HE has a positive mean, their synchronization goes up while the group with LE has a negative mean, as such their synchronization does down. 
+
+c. Given a DF of 259, we can find the total by adding 1 to that value. As such, we can conclude that the total number of students that participated is 260. 
+
+d. Since our p-value is 0.042, it is less than the 0.05 significance level. As such we reject the null hypothesis. As such, we can conclude that their is indeed a difference in means.
+
+e. Since out p-value is 0.042, it is greater than the 0.01 significance level. As such, we fail to reject the null hypothesis. As such, we can not conclude that their is a difference in means.
+
+Section 9.3
+
+1
+
+There are 15 Protoss, Terran, and Zerg players with a sample mean of 20.5333, 19, and 21.0667 for their average age
+
+```{r, echo=FALSE}
+library(ggplot2)
+Starcraft <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Starcraft.csv")
+ggplot(Starcraft, aes(sample = Age)) + geom_qq() + geom_qq_line() + facet_grid(. ~ Race)
+age.aov <- aov(Age ~ Race, data = Starcraft)
+summary(age.aov)
+```
+The conditions are satisfied for preforming an ANOVA test
+
+Since we have such a small p-value we can conclude that there is a difference in mean age across the three races
+
+2
+
+```{r, echo=FALSE}
+library(ggplot2)
+Birthweight <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Birthweight.csv")
+ggplot(Birthweight, aes(sample = weight)) + geom_qq() + geom_qq_line() + facet_grid(. ~ status)
+age.aov <- aov(weight ~ status, data = Birthweight)
+summary(age.aov)
+```
+OUr hypothesis are as follows:
+
+$H_{0}$: Smoking status of mothers do not affect the birthweight of their babies vs. $H_{a}$: Smoking status of mothers do affect the birthweight of their babies. 
+
+After doing an ANOVA test on the data given, we get a p-value of 0.0137, which is smaller than the 0.05 significance level. As such, we can conclude that there is a relationship between smoking status and mean birth weights of their babies. THis is concluded on the basis of assuming that each group is normally distributed, populations have a common variance, samples are independent from each other, and that observations are random and independent.
+
+Section 8.2
+
+8.41
+
+Yes, the p-value is 0.002, much lower than the 0.05 sig level.
+
+8.42
+
+Pooled SD: $\sqrt{6.20} = 2.490$
+
+DF: 12
+
+8.43
+
+95% confidence interval: $10.200 \pm 2.178813 \frac{\sqrt{6.20}}{\sqrt{5}} = 10.200 \pm 2.426 =$ 7.774 to 12.626
+
+8.44
+
+90% confidence interval: $(16.8 - 10.8) \pm 1.782288 \sqrt{\frac{6.20^2}{5^2}+\frac{6.20^2}{5^2}} = 6 \pm 2.68 =$ 3.32 to 8.68
+
+
+8.45
+
+With our hypothesis as follows:
+
+$H_{0}: \mu_{A} = \mu_{C}; H_{a}: \mu_{A} \not = \mu_{C}$
+
+we use a chi-squared test to find if there is any evidence for difference. After the chi-squared test we get a p-value of 0.71. Since the p-value is greater than the 0.05 sig level, we fail to reject the null hypothesis and conclude that there is no difference in means between A and C. 
+
+8.54
+
+a. $H_{0}: \mu_{aa} = \mu_{np}; H_{a}: \mu_{aa} \not = \mu_{np}$
+
+Using a chi-squared test, we find that the p-value is 0.51. Since it is greater than the 0.05 sig level, we fail to reject the null hypothesis and find no difference in means for students wanting the two awards in question. 
+
+b. $H_{0}: \mu_{aa} = \mu_{ogm}; H_{a}: \mu_{aa} \not = \mu_{ogm}$
+
+Using a chi-squared test, we find that the p-value is 0.134. Since it is greater than the 0.05 sig level, we fail to reject the null hypothesis and find no difference in means for students wanting the two awards in question. 
+
+c. $H_{0}: \mu_{np} = \mu_{ogm}; H_{a}: \mu_{np} \not = \mu_{ogm}$
+
+Using a chi-squared test, we find that the p-value is 0.0002. Since it is less than the 0.05 sig level, we are able to reject the null hypothesis and find evidence that there is a difference in means for students wanting the two awards in question. 
+
+8.62
+
+```{r,echo=FALSE}
+library(ggplot2)
+library(dplyr)
+FishGills3 <- read.csv("https://www.lock5stat.com/datasets2e/FishGills3.csv")
+ggplot(FishGills3, aes(sample = GillRate)) + geom_qq() + geom_qq_line() + facet_grid(. ~ Calcium)
+calcium.aov <- aov(GillRate ~ Calcium, data = FishGills3)
+summary(calcium.aov)
+FishGills3 %>% group_by(Calcium) %>% summarise(mean(GillRate),sd(GillRate))
+```
+
+After calculating the respective p-values for each pair (low vs. medium, low vs. high, medium vs. high) we get that the p-values for low vs. medium and low vs. high to be smaller than the 0.05 sigificance level. As such, those are the levels that have a difference in means.

@@ -1,0 +1,140 @@
+---
+title: "STAT120 Exam 3"
+author: "Victor Huang"
+date: "5/31/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1.
+
+a.i. 1200ft
+
+a.ii. Confidence Interval: B; Prediction Interval: A
+
+a.iii. I would use the confidence interval to determine the safety of flying on a 1400 ft runway. As the data and confidence interval is concluded from other 2400 lb planes, it would make more sense to use the mean response (confidence interval) rather than a individual response (prediction interval) considering my plane is also 2400 lbs. As such, since 1400ft is not within the 99% confidence interval, I will determine it to be not safe to take flight on.
+
+b.i. B
+
+b.ii. A
+
+b.iii. A
+
+b.iv A
+
+c.i Sample A: Summary 1; Sample B: Summary 2
+
+c.ii 60
+
+2.
+
+i. Expected Count: 250(0.48) = 120
+
+ii. $\chi^2$ contribution: $\frac{(120 - 100)^2}{120} = \frac{400}{120} \approx 3.33$
+
+3.
+
+This method shows that while the means may be different, we do not know if the difference is statistically significant. This could lead us to type 1 errors where we reject the null hypothesis that could be true due to a false greater significance level and to type 2 errors where we fail to reject a null hypothesis due to a false lower significance level. For us to achieve and know that, we should first find the respective means and SD for each worm, then compare the largest and smallest SD to see if we get a value that is indeed significant (less than 2). Once we confirm that, we should check the scatterplots for each group to check for outliers. Once we check and account for outliers, we can than proceed to find the respective difference in means. 
+
+4.
+
+a. $H_{0}: p_{1} = p_{2} = p_{3} = p_{4} = p_{5}$ The chances of landing on the five parts of the wheel are the same; $H_{a}:$ The chances of landing on the five parts of the wheel are not the same
+
+b. For this dataset we can use the chi-squared test. It is safe to use a chi-squared test since our expected count for each section is greater than 5. In this case, after creating an expected table for the sections, we find that each section is expected to get 10 lands assuming the wheel is fair (which is greater than 5).
+
+```{r, echo=FALSE}
+library(ggplot2)
+WheelGame <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTqotSOjliBW0P0I76Q6VB7BWgMFUyxuaMrUMieJvQBUzF_aEpEiiZbC51KgBU-9TW5W5x1peVe18bA/pub?gid=134960246&single=true&output=csv")
+out1 <- table(WheelGame$Outcome, WheelGame$SpinNumber)
+chisq.test(out1)
+```
+c. We get a chi-squared value of 200 and a p-value of 0.4074.
+
+d. Since our p-value is larger than our significance level of 0.05, we fail to reject the null hypothesis as we do not have sufficient evidence to conclude that the wheel is unfair with these 50 spins.
+
+5.
+
+a. $H_{0}: \mu_{1} = \mu_{2} = \mu_{3} = \mu_{4}$ All dog breeds have the same average maximum speed; $H_{a}:$ At least a pair of dog breeds have different average maximum speeds.
+
+b. We should use the f-stat. We can safely use the f-stat after grouping and checking the breeds max speed and finding that the largest SD (that of the Border Collie) and the smallest SD (that of the Husky) have a proportion of 1.4956, which is less than 2. After confirming that it is significantly different. We confirm by creating scatterplots for each group. After looking at each respective scatterplot, the quantile-normal plots look ok for the dataset provided (it should be noted that there are two outliers for the Border Collie).
+
+```{r,echo=FALSE}
+library(ggplot2)
+library(dplyr)
+Dogs <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQL6FRLSwtBsRyarJ5ISRN5KRCJqkMiMitwimY3ucBlKOGp4ebopdfX2-tTc8eLZtmTpdM4idV_o7ix/pub?gid=1280263057&single=true&output=csv")
+Dogs %>% group_by(Breed) %>% summarise(mean(MaxSpeed), sd(MaxSpeed))
+ggplot(Dogs, aes(sample = MaxSpeed)) + geom_qq() + geom_qq_line() + facet_grid(. ~ Breed)
+```
+
+c. We get an f-stat of 28.1 with the outliers and an f-stat of 27.36 after removing the two aforementioned outliers (observation 24 and 14). However, with or without the outliers, our p-value remained approximately 0.
+```{r,echo=FALSE}
+dogs.aov <- aov(MaxSpeed ~ Breed, data = Dogs)
+summary(dogs.aov)
+dogs1.aov <- aov(MaxSpeed ~ Breed, data = Dogs, subset = -24)
+dogs2.aov <- aov(MaxSpeed ~ Breed, data = Dogs, subset = -14)
+summary(dogs1.aov)
+summary(dogs2.aov)
+```
+
+d. Since our p-value is less than the significance value, we are able to reject the null hypothesis. As such, we have enough evidence to conclude that there is a difference of average max speed between at least two breeds of the four dog breeds.
+
+6.
+
+a. $H_{0}:$ There is no association between major and favorite drink; $H_{a}:$ There is an association between major and favorite drink
+
+b. For this dataset we can use the chi-squared test. It is safe to use a chi-squared test since our expected count for each section is greater than 5. In this case, after creating an expected table for the major and drink matrix, we find that each individual cell is expected to get a value that is greater than 5 (as one can see from the table). 
+
+```{r, echo=FALSE}
+library(ggplot2)
+MajorDrinks <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQVTkTF_6Z3_bMXLLrOunO4qODP2pW6xOnIbNT5u0M0pJgDpcrqxQkP0BDY_cTgs3UCXmObyZv24s8B/pub?gid=360398027&single=true&output=csv")
+out2 <- table(MajorDrinks$Major, MajorDrinks$FavDrink)
+chisq.test(out2)
+chisq.test(out2)$expected
+```
+
+c. We get a chi-squared value of 15.862 and a p-value of 0.01451.
+
+d. Since we have a smaller p-value than significance value, we are able to reject the null hypothesis. As such, we can have evidence that there is an association between major and favorite drink among these 200 students.
+
+7.
+
+a. $H_{0}:$ Caffeine intake is not an effective predictor of sleep; $H_{a}:$ Caffeine intake is an effective predictor of sleep.
+
+b. We should use the t-stat for this. The sample data fits into a linear relationship and is fairly evenly spaced around the regression line. So, it seems appropriate to try to use a simple linear model and the t-stat.
+
+```{r,echo=FALSE}
+library(ggplot2)
+library(dplyr)
+CaffeineSleep <- read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQO5AQsuDSzPQ5ReVGwfBvlZZTFgxQOYYKlwm2j9UTMi2zko8rDpDdOc5zMGIZRiPb_SG4B7fxdWU-E/pub?gid=107079370&single=true&output=csv")
+ggplot(CaffeineSleep, aes(x = Sleep, y = Caffeine)) + geom_point() + stat_smooth(method = "lm", se = FALSE)
+summary(lm(Sleep ~ Caffeine, data = CaffeineSleep))
+```
+
+c. We get a t-stat of 82.09 and a p-value of 2e-16 (approximately 0).
+
+d. Since we get a smaller p-value than the significance value, we are able to reject the null hypothesis. As such, we have significant evidence to conclude that caffeine consumption is an effective predictor of sleep for these 100 individuals.
+
+e. $Sleep = 7.9715157 - 0.0040725(Caffeine)$
+
+f. We get a R-squared value of 0.6064 (60.64%). This means that 60.64% of the total variation can be explained by the linear model.
+
+g. We get a 90% confidence interval of (6.672651, 6.82686). We are 90% confident that the amount of sleep of those who consume 300 mg of coffee falls between the interval of (6.672651, 6.82686).
+
+```{r,echo=FALSE}
+caffeine.lm <- lm(Sleep ~ Caffeine, data = CaffeineSleep)
+newcaffeine <- data.frame(Caffeine=c(300))
+predict(caffeine.lm, newdata = newcaffeine, interval = "confidence", level = 0.90)
+```
+
+h. We get a 90% prediction interval of (6.006173, 7.493338). 90% of those who consume 300 mg of caffeine have their sleeping hours fall between the interval of (6.006173, 7.493338).
+
+```{r,echo=FALSE}
+caffeine.lm <- lm(Sleep ~ Caffeine, data = CaffeineSleep)
+newcaffeine <- data.frame(Caffeine=c(300))
+predict(caffeine.lm, newdata = newcaffeine, interval = "predict", level = 0.90)
+```

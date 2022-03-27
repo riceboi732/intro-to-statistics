@@ -1,0 +1,201 @@
+---
+title: "STAT 120 HW 6"
+author: "Victor Huang"
+date: "5/9/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Section 6.2-D
+
+6.75
+
+n = 30: 4.56
+
+n = 200: 1.77
+
+n = 1000: 0.79
+
+As the size of n increases, the standard error decreases. Since the standard error decreases, the accuracy increases
+
+6.78
+
+Yes, it is appropriate. The degrees of freedom would be 75 - 1 = 74; The standard errr would be approximately 1.1662
+
+6.79
+
+Not appropriate
+
+Section 6.2-CI
+
+6.86
+
+$\mu = \overline{x} = 88.3$
+
+Margin of Error = 14.8
+
+Confidence Interval: 73.2, 102.8
+
+6.90
+
+n = 417
+
+6.91
+
+1.856 to 2.944
+
+Section 6.2-HT
+
+6.123
+
+Yes, t = -3.67, p-value= 0.0018
+
+6.124
+
+a.
+
+$H_{0}: \mu = 12.5; H_{a}: \mu < 12.5$
+
+Test Statistic: -11.608
+
+Degrees of Freedom: 10
+
+P-value $\approx$ 0
+
+Since p-value is so low, we can reject the null hypothesis and support that the footballs had less than 12.5 psi.
+
+b.
+
+Yes, its fair
+
+Section 6.3-D
+
+6.132
+
+a.
+
+SE = 0.0310
+
+b.
+
+It is large enough for Central limit Theorem
+
+Section 6.3-CI
+
+6.145
+
+0.301 to 0.335. No, it is not plausible that there is a difference
+
+6.148
+
+-0.3049, -0.0151
+
+Section 6.3-HT
+
+6.160 (write out the 5 steps for hypotheses tests for part b)
+
+a.
+
+$\hat{p}_{1} = 0.2157$
+
+$\hat{p}_{2} = 0.174$
+
+$p = 0.1983$
+
+b.
+
+$H_{0}: p_{1} = p_{2}; H_{a}: p_{1} \not= p_{2}$
+
+$\hat{p}_{1} = 0.2157$
+
+$\hat{p}_{2} = 0.174$
+
+$p = 0.1983$
+
+$z = 1.7866$
+
+Less than 1.96; Can not reject the $H_{0}$; No significant evidence for difference
+
+6.172 (write out the 5 steps)
+
+$H_0:p_{1} \geq p_{2}; H_a:p_{1} < p_{2}$
+
+Sample Proportion: $p_{1}=0.0333; p_{2} = 0.3; p_{1} - p_{2} = -0.267$
+
+$z = -2.77$
+
+p-value = 0.003
+
+Reject $H_{0}$. We can conclude that green tea reduces the risk of cancer
+
+6.4-CI
+
+6.196
+
+0.50 to 0.70; We are 90% confident that difference lies between the values 0.50 and 0.70
+
+6.206
+
+a.
+
+Males watch more tv by 2.383 hrs a week
+
+b.
+
+-3.83, -0.93
+
+c.
+
+They are the approximately the same
+
+d.
+
+We are 99% sure that the difference lies between -3.83 and -.93
+
+6.4-HT
+
+6.214
+
+a.
+
+$H_{0}: \mu_{1} = \mu_{2}; H_{a}: \mu_{1} > \mu_{2}$
+
+b.
+
+$\mu = 9.9 - 7.5 = 2.4$
+
+c.
+
+t-statistics: 1.744
+
+d.
+
+p-value = 0.045
+
+e.
+
+Since we have a smaller p-value, we can reject the null hypothesis
+
+f.
+
+We have evidence that supports the fact that statistical inference is intuitive for babies
+
+6.219 (write out the 5 steps for hypothesis tests. Include the sample means and sample
+standard deviations, as well as the t-statistic in step 2. To determine the means and standard deviations, you can either load the dataset, or just type the numbers into a list using c(...))
+
+$H_{0}: \mu_{1} = \mu_{2}; H_{a}: \mu_{1} < \mu_{2}$
+
+Sample Means: 231.7, 438.7
+
+Sample SDs: 71.2, 37.7
+
+t-statistic: -6.80
+
+p-value $\approx$ 0
+
+Since we have such a low p-value, we can reject the null hypothesis. Thus, we can conclude that mice who experience exercise are less stressed then those who do not.

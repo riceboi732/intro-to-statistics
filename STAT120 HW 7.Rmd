@@ -1,0 +1,179 @@
+---
+title: "STAT 120 HW 7"
+author: "Victor Huang"
+date: "5/17/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+library(Lock5Data)
+library(CarletonStats)
+opts_chunk$set(echo = FALSE,out.width="50%",fig.align="center",message=FALSE)
+```
+
+Section 7.6: Some parts ask you to create quantile-normal plots split by levels of a factor.
+The code to do this is right above the exercises (also see the example on pages 76-77).
+
+2
+
+a.
+
+```{r,echo=FALSE}
+beerwings <- read.csv("https://math.carleton.edu/Stat120/RLabManual/beerwings.csv")
+ggplot(beerwings, aes(x = gender, y = hotwings)) + geom_boxplot()
+```
+
+
+b.
+
+```{r,echo=FALSE}
+library(dplyr)
+beerwings %>% group_by(gender) %>% summarize (mean(hotwings), sd(hotwings))
+ggplot(beerwings, aes(sample = hotwings)) + geom_qq() + geom_qq_line() + facet_grid(. ~ gender)
+```
+From the graph, one can see that there are some clear outliers to the rough line prescribed by the graph. As such, a normal distribution may not be appropriate and normality may not be met.
+
+c.
+
+```{r,echo=FALSE}
+t.test(hotwings ~ gender, data = beerwings)
+```
+We can conclude that there is a difference in the average number of hotwings consumed between males and females. This is assuming that the data does not match a normal distribution.
+
+d.
+
+```{r,echo=FALSE}
+library(CarletonStats)
+permTest(hotwings ~ gender, data = beerwings)
+```
+As one can see, we reach the same conclusion
+
+3
+
+a.
+```{r,echo=FALSE}
+facesymmetry <- read.csv("https://math.carleton.edu/Stat120/RLabManual/facesymmetry.csv")
+t.test(facesymmetry$l.pupil, alt="greater")
+```
+From the data displayed above, we fid a 95 confidence interval between 31.62929 to Inf.
+
+b.
+
+Since we get the right and left eye measurements from the same person, this would be a matched-pair setting.
+
+```{r,echo=FALSE}
+facesymmetry <- read.csv("https://math.carleton.edu/Stat120/RLabManual/facesymmetry.csv")
+eyesdiff <- facesymmetry$l.pupil - facesymmetry$r.pupil
+t.test(eyesdiff, alt = "greater")
+```
+From the data showed above, we get a 95% confidence interval from -0.5277 to Inf.
+
+c.
+
+This is an independent sample setting
+```{r,echo=FALSE}
+t.test(eyesdiff ~ eye, data = facesymmetry, alt="greater")
+```
+From the data above, we see that on symmetry does indeed depend on eye dominance.
+
+d.
+
+```{r,echo=FALSE}
+t.test(eyesdiff ~ hand, data = facesymmetry, alt="greater")
+```
+Likewise, we see a 95% confidence interval from -1.691 to inf. As such, we also see that symmetry does indeed depend on hand dexterity (left or right handed).
+
+4
+
+a.
+
+```{r,echo=FALSE}
+Sodexho <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Sodexho.csv")
+ggplot(Sodexho, aes(x = Type, y = Protein)) + geom_boxplot()
+```
+
+b.
+
+```{r,echo=FALSE}
+library(dplyr)
+Sodexho %>% group_by(Type) %>% summarize (mean(Protein), sd(Protein))
+ggplot(Sodexho, aes(sample = Protein)) + geom_qq() + geom_qq_line() + facet_grid(. ~ Type)
+```
+
+From the graph, one can see that there are some clear outliers to the rough line prescribed by the graph. As such, a normal distribution may not be appropriate and normality may not be met.
+
+c.
+
+```{r,echo=FALSE}
+t.test(Protein ~ Type, data = Sodexho)
+```
+As we can clearly see from the data, the mean for meat protein is  26.95217 whereas vegetarian protein is only 13.2944. As such, we conclude that the means are not the same
+
+d.
+```{r,echo=FALSE}
+t.test(Protein ~ Type, data = Sodexho, subset = -c(15,38))
+```
+Even after getting rid of the outliers, we still come to the same conclusion as before.
+
+e.
+```{r,echo=FALSE}
+library(CarletonStats)
+permTest(Protein ~ Type, data = Sodexho)
+```
+Looking at the data we see that we can reach the same conclusion as above.
+
+Section 7.1
+
+7.4
+
+$p_{1}$ = 280
+
+$p_{2}$ = 40
+
+$p_{3}$ = 40
+
+$p_{4}$ = 40
+
+7.11
+
+a.
+
+$(210 + 732 + 396 + 125 + 213 + 324)(0.35) = 700$
+
+b.
+
+$\frac{(732 - 700)^2}{700} = 1.46$
+
+c.
+
+$df = 6 - 1 = 5$
+
+7.14
+
+$\chi^2 = \frac{(Actual - Expected)^2}{Expected} = \frac{(66 - 39.67)^2}{39.67} + \frac{(39 - 39.67)^2}{39.67} + \frac{(14 - 39.67)^2}{39.67} = 34.0980$
+
+Looking at our $\chi^2$ value, we can say that there are proportions that aren't the $\frac{1}{3}$ outcome we expect, we find that the win count for rock and scissors don't match the one-third win rate
+
+7.16
+
+$df = 5 - 1 = 4$
+
+Confidence Level: 5%
+
+$\chi^2 = \frac{(Actual - Expected)^2}{Expected} = \frac{(391 - 410)^2}{410} + \frac{(257 - 280)^2}{280} + \frac{(156 - 130)^2}{130} + \frac{(89 - 70)^2}{70} + \frac{(107 - 110)^2}{110} = 13.2087$
+
+p-value = 0.010
+
+Summarizing our data, we can conclude that the data given by the article is not accurate.
+
+7.26
+
+$\chi^2 = \frac{(Actual - Expected)^2}{Expected} = \frac{(357.588 - 345)^2}{357.588} + \frac{(209.088 - 197)^2}{209.088} + \frac{(148.5 - 170)^2}{170} + \frac{(115.236 - 126)^2}{115.236} + \frac{(93.852 - 101)^2}{93.852} + \frac{(79.596 - 72)^2}{79.596} + \frac{(68.904 - 69)^2}{68.904} + \frac{(60.588 - 51)^2}{60.588} + \frac{(54.648 - 57)^2}{54.648} = 9.0876$
+
+p-value = 0.3350
+
+Summarizing out data, we see that our data is not consistent with Benford's Law. 

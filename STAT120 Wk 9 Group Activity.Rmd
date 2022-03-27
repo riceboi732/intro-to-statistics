@@ -1,0 +1,85 @@
+---
+title: "STAT120 Wk 98 Group Activity"
+author: "Victor Huang, Neda Tehrani, Aisha Dem"
+date: "5/26/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Problem 1
+
+```{r setup, include=FALSE}
+library(ggplot2)
+knitr::opts_chunk$set(echo = TRUE , message = FALSE , warning = FALSE , out.width = "70%" , fig.align = "center")
+beer<-read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRDXYJNJCWWt2lfUuIhbtVWFiEMGGXG-JGutN5dFOUfS_srzC7OiUu0BPdSr39XpickBiVFrzvTMrwI/pub?gid=854355379&single=true&output=csv")
+```
+
+```{r,echo=FALSE}
+ggplot(beer, aes(x = abv, y = calories)) + geom_point() + stat_smooth()
+```
+
+(a) An increase in abv leads to an increase in calories
+
+(b) The data appears to be distributed fairly evenly around the linear model. As such, it is appropriate to use a linear model to make predictions.
+
+```{r,echo=FALSE}
+beer.lm <- lm(calories ~ abv, data = beer)
+summary(beer.lm)
+```
+
+c.i) What is the equation of the least squares regression line for the sample?
+
+calories = -0.7597 + 30.5209(abv)
+
+c.ii) If we are testing to see if the slope in the population is non-zero, what are the null and alternative hypotheses? What is the p-value? What conclusion should we make?
+
+
+$H_{0}$: The slope is zero vs. $H_{a}$: The slope is non-zero. We get a p-value of 2.2e-16, which is much smaller than the sig value of 0.05. As such, we can reject the null hypothesis and have evidence that the slope is non-zero
+
+c.iii) Give a 95% confidence interval for the population slope, and explain what it means in the context of this problem.
+
+We get a 95% confidence interval of (29.037, 32.0049). We are 95% confident that the slope of the linear regression for the whole population falls between the interval of (29.037, 32.0049).
+
+d.i) a 95% confidence interval for the mean number of calories for all beers which have 5% abv.
+
+
+```{r,echo=FALSE}
+new.abv<-data.frame(abv = c(5))
+predict(beer.lm, newdata = new.abv, interval = "confidence", level = 0.095)
+```
+We get a 95% confidence interval of (151.6961, 151.993). We are 95% confident that the mean number of calories for all beers with 5% abv falls between the interval of (151.6961, 151.993).
+
+d.ii) a 95% prediction interval for the number of calories for all beers which have 5% abv.
+
+```{r,echo=FALSE}
+new.abv<-data.frame(abv = c(5))
+predict(beer.lm, newdata = new.abv, interval = "predict", level = 0.095)
+```
+We get a 95% prediction interval of (149.4618 , 154.2273). 95% of all beers with 5% abv have calorie counts between the interval of (149.4618 , 154.2273).
+
+d.iii) a 95% confidence interval for the mean number of calories for all beers which have 9% abv.
+
+```{r,echo=FALSE}
+new.abv<-data.frame(abv = c(9))
+predict(beer.lm, newdata = new.abv, interval = "confidence", level = 0.095)
+```
+We get a 95% confidence interval of (273.569, 274.2869). We are 95% confident that the mean number of calories for all beers with 9% abv falls between the interval of (273.569, 274.2869).
+
+d.iv) a 95% prediction interval for the number of calories for all beers which have 9% abv.
+
+```{r,echo=FALSE}
+new.abv<-data.frame(abv = c(9))
+predict(beer.lm, newdata = new.abv, interval = "predict", level = 0.095)
+```
+
+We get a 95% prediction interval of (271.5229, 276.333). 95% of all beers with 9% abv have mean calorie counts between the interval of (271.5229, 276.333).
+
+```{r,echo=FALSE}
+beer.lm <- lm(calories ~ abv, data = beer, subset = -which(beer$abv>15))
+summary(beer.lm)
+```
+
+## Problem 2.
+
+The linear equation changed from calories = -0.7597 + 30.5209(abv) to calories = -12.7587 + 32.8518(abv). However the p-value remains approximately the same. Since we got rid of the outlier, we have less variation, meaning that the confidence and prediciton intervals likely narrowed.

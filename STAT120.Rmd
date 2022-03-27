@@ -1,0 +1,43 @@
+---
+title: "Week 2 Group Activity"
+author: "Victor, Andrew, Mason, Nora"
+date: "April 7, 2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, message=FALSE, out.width="60%", fig.align="center") #You can change out.width if you want to adjust the sizes of your plots.
+Wine<-read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQrZqgcPluW09-KOnQv1A8ETY-I2xg_vXat8hq9i1BfZD2OxDNaniUAPgazvOwaNAv9BBKDZdMKAKZ2/pub?gid=91814771&single=true&output=csv")
+```
+
+
+**Question 1** 
+
+Countries (Categorical), Variety (Categorical), Point (Quantitative)
+
+**Question 2** 
+
+```{r}
+ggplot(Wine, aes(x=Country, fill = Variety)) + geom_bar(position = "fill")
+```
+
+**Question 3** 
+
+```{r}
+ggplot(Wine, aes(x = Country, y = Points)) + geom_boxplot()
+```
+
+**Question 4** 
+
+```{r}
+ggplot(Wine, aes(x = Variety, y = Points)) + geom_boxplot()
+```
+
+**Question 5**
+
+The mean of the scores is `r mean(Wine$Points)`, and the median is `r median(Wine$Points)`. The standard deviation is `r sd(Wine$Points)`.
+

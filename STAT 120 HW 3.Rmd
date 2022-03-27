@@ -1,0 +1,213 @@
+---
+title: "STAT 120 HW 3"
+author: "Victor Huang"
+date: "4/25/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(ggplot2)
+library(Lock5Data)
+library(CarletonStats)
+opts_chunk$set(echo = FALSE,out.width="50%",fig.align="center",message=FALSE)
+```
+Section 4.1
+
+4.2
+
+a. Sample B
+
+b. Sample C, D
+
+4.9
+
+Parameters $p_{m}, p_{f}$ (proportions of males & females who smoke, respectively). $H_{0} : p_{m} = p_{f}; H_{a} : p_{m} > p_{f}$
+
+4.12
+
+Parameters: $\mu_{a}, \mu_{n}$ (Average sales in stores where customers are approached and not approached).$H_{0} : \mu_{a} = \mu_{n}; H_{a} : \mu_{a} > \mu_{n}$
+
+4.20
+
+a. Parameters: $p_{a}, p_{b}$ (proportions of the 100 testers who prefer Brand A and Brand B, respectively).$H_{0} : p_{a} = p_{b}; H_{a} : p_{a} > p_{b}$
+
+b. 90 people choose brand A 10 people choose brand B
+
+c. 10 people choose brand A 90 people choose brand B
+
+d. 55 people chooses brand A 45 people choose brand B
+
+4.29
+
+a. The null hypothesis is that her guesses don't reflect any pattern and are random in anture (i.s. shes doesn't what was poured first). The alternative hypothesis is that she is able to get some number of them correct (i.e. better than random guessing).
+
+b.$H_{0} : p = 0.5; H_{a} : p > 0.5$
+
+Section 4.2
+
+4.45
+
+0.5, left-tailed test
+
+4.48
+
+Centered at 0, two-tailed
+
+4.65 (for b and c, don’t worry about sketching the curve, just pick the closest
+p-value)
+
+a. $H_{0} : \overline{x}_{c} - \overline{x}_{n} = 0; H_{a} : \overline{x}_{c} - \overline{x}_{n} \not= 0$
+
+b. p = 0.11
+
+c. p = 0.03
+
+d. The second result from part c (the difference being 2.4)
+
+4.66 (skip part a)
+
+b. 0.1 and 0.365, 0.3 and 0.085, 0.5 and 0.012, 0.65 and 0.001
+
+c. Since the p-value in question is so minuscule (0.001), the probability of this happeneing is very slim. The chance that a difference of 0.65 exists is highly unlikely.
+
+d. The one with a p-value of 0.001
+
+Section 4.3
+
+4.92
+
+a. I
+
+b. IV
+
+c. II
+
+d. III
+
+4.97
+
+a. Supplier A has a very high chance while supplier B has a lower chance
+
+b. Supplier A, their chicken have a higher likelihood of containing more than 80 ppb of arsenic.
+
+c. Supplier B
+
+4.108
+
+a. Yes, it is convincing. This is due to the low p-value
+
+b. Since the p-value associated is very low, the evidence is very strong
+
+c. Concluding all of the above, it is reasonable to conclude that drinking beer as opposed to water would make you more attractive to mosquitoes.
+
+Section 5.8
+
+1.
+
+Five Parts:
+
+1.Parameters: $\mu_{A}, \mu_{C}$ (average cals/gram of popular cereals for adults & children). $H_{0}: \mu_{A} = \mu_{C};  H_{A} : \mu_{A} > \mu_{C}$
+
+2. Observed difference: -0.62957
+
+3. p-value = 2e-04
+
+4. Reject $H_{0}$
+
+5.Given that the p-value is extremely low, we can come to the conclusion that there is strong evidence that indicates the difference of means is statistically significant and that there is a difference between the calorie per gram of cereal for children compared to adults.
+
+```{r, echo=FALSE}
+library(ggplot2)
+Cereals <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Cereals.csv")
+ggplot(Cereals, aes(x=type, y=calgram)) + geom_boxplot()
+tapply(Cereals$calgram, Cereals$type, mean)
+```
+As seen in the data, the difference in calgram for adult and children cereal is approximately 0.630.
+```{r}
+library(ggplot2)
+Cereals <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Cereals.csv")
+permTest(calgram ~ type, data = Cereals)
+```
+Given that the p-value is extremely low, we can come to the conclusion that there is strong evidence that indicates the difference of means is statistically significant and that there is a difference between the calorie per gram of cereal for children compared to adults.
+
+4.
+
+Five Parts:
+
+1. $H_{0} : \mu_{b} - \mu_{n} = 0; H_{a} : \mu_{b} - \mu_{n} > 0$
+
+2. BeerTime - MileTime : 95.82143 
+
+3. p-value = 2e-04
+
+4. Reject the $H_{0}$
+
+5. Given that there the p-value is extremely low, we can conclude that the paired difference is statistically significant. From this, I hypothesize that drinking beer effects ones athletic abilities when it comes to running a mile with the null hypothesis being that the difference is zero and the alternative hypothesis being that there is a significant difference.
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+BeerMilers <- read.csv("https://math.carleton.edu/Stat120/RLabManual/BeerMilers.csv")
+mean(BeerMilers$BeerTime)
+sd(BeerMilers$BeerTime)
+mean(BeerMilers$MileTime)
+sd(BeerMilers$MileTime)
+```
+Yes there does
+
+```{r, echo=FALSE}
+permTestPaired(BeerTime ~ MileTime, data=BeerMilers,)
+```
+
+Given that there the p-value is extremely low, we can conclude that the paired difference is statistically significant. From this, I hypothesize that drinking beer effects ones athletic abilities when it comes to running a mile with the null hypothesis being that the difference is zero and the alternative hypothesis being that there is a significant difference.
+
+12.
+
+Five Steps:
+
+1. $H_{0} : p_{m} = p_{f} = 0; H_{a} : p_{m} \not= p_{f}$
+
+2. female :  0.94955 	 male :  0.91643 
+
+3. p-value = 0.1094 
+
+4. Do not reject the $H_{0}$
+
+5. Seeing that the p-value is relatively high (0.114), we can conclude that the difference in proportions between men and women who use computers is not statistically significant. 
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+Pew <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Pew.csv")
+compUse <- table(Pew$sex, Pew$usecomp)
+proportions(compUse)
+```
+From the data, we can see that 46 percent of women use a computer while 47 percent of men use a computer
+
+```{r,echo=FALSE}
+Pew <- read.csv("https://math.carleton.edu/Stat120/RLabManual/Pew.csv")
+ggplot(Pew, aes(x=usecomp, fill=sex)) + geom_bar(position = "fill")
+permTest(usecomp2 ~ sex, data = Pew)
+```
+Seeing that the p-value is relatively high (0.114), we can conclude that the difference in proportions between men and women who use computers is not statistically significant. 
+
+Section 4.4
+
+4.133
+
+Small significance level
+
+4.136
+
+Small significance level
+
+4.139
+
+Type 1 error is when they reject a true null hypothesis saying that there is no difference and thus do not produce the new drug. Type 2 error is when they do not reject the false null hypothesis saying that the new drug is more effective and prescribe it to millions. I would rather go with a type 1 error and lose some marginal benefits then take the risk and prescribe a drug that hasn't been well tested with dangerous side effects to millions.
+
+4.142
+
+Type 1 error is when they reject a true null hypothesis such that the company sued even though they aren't lying in their advertising. Type 2 error is when they fail to reject a false null hypothesis such that the company gets away with lying in their advertising. I would rather type 1 happen then type 2, false advertisement is far more dangerous and consequential then a faulty lawsuit (well, I guess that really depends on who's side you're on, maybe the bad publicity could bankrupt the company.)
